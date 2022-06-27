@@ -1,9 +1,11 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const { addAbortSignal } = require('stream');
-const app = express();
+//const { addAbortSignal } = require('stream');
+
 
 const stuffRoutes = require('./routes/stuff');
+const userRoutes = require('./routes/user');
 
 mongoose.connect('mongodb+srv://Carolinadelavega1:vega2022.@cluster1.thg0nym.mongodb.net/?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -11,7 +13,7 @@ mongoose.connect('mongodb+srv://Carolinadelavega1:vega2022.@cluster1.thg0nym.mon
   .then(() => console.log('Connexion à MongoDB réussie, toptip !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-  app.use(express.json());
+  const app = express();
 
   app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -20,6 +22,8 @@ mongoose.connect('mongodb+srv://Carolinadelavega1:vega2022.@cluster1.thg0nym.mon
     next();
   });
 
- app.use('/api/sauces', stuffRoutes);
 
+ app.use(bodyParser.json()); 
+ app.use('/api/sauces', stuffRoutes);
+app.use('/api/auth', userRoutes);
 module.exports= app;
