@@ -26,4 +26,6 @@ mongoose.connect('mongodb+srv://Carolinadelavega1:vega2022.@cluster1.thg0nym.mon
  app.use(bodyParser.json()); 
  app.use('/api/sauces', stuffRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 module.exports= app;
